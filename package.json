@@ -1,0 +1,23 @@
+{
+  "name": "cardbuilder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FASTLIKETREE/cardbuilder.git"
+  },
+  "author": "Wesley Hunt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FASTLIKETREE/cardbuilder/issues"
+  },
+  "homepage": "https://github.com/FASTLIKETREE/cardbuilder#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "run-sequence": "^2.2.1"
+  }
+}
