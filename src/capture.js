@@ -3,14 +3,15 @@ import fs from 'fs'
 
 //const execSync = childProcess.execSync
 const execSync = childProcess.execFile
-const IECapt = '../bin/IECapt.exe'
 
 class capture {
   constructor(out) {
-    this.htmlFile = 'captured.html'
+    this.htmlFile = 'capture.html'
     if (!out) {
       this.out = 'capture.bmp'
     }
+    console.log(`${__dirname}\\${this.htmlFile}` + '<-- this is where wer write to?')
+    fs.writeFileSync(`${__dirname}\\${this.htmlFile}`, '<html>\n<body style="margin:0px">\n')
   }
 
   getPath() {
@@ -20,13 +21,12 @@ class capture {
   }
 
   addHtml(html) {
-    fs.appendFileSync(`${__dirname}/${this.htmlFile}`, html)
+    fs.appendFileSync(`${__dirname}/${this.htmlFile}`, html + '\n')
   }
 
   capture() {
-    const encodedPath = this.getPath()
-    console.log(`${IECapt} --url="${encodedPath}" --out="${this.out}"`)
-    execSync(`${IECapt} --url="${encodedPath}" --out="${this.out}"`)
+    fs.appendFileSync(`${__dirname}/${this.htmlFile}`, '</html>\n</body>')
+    //Use chrome print screen function
   }
 }
 
