@@ -1,11 +1,39 @@
 import { image } from './image'
 import { capture } from './capture'
 
-const testImage = new image('./images/Laboratory.bmp')
-testImage['borderRadius']('50%')
-const imageHtml = testImage.getHtml()
-console.log(imageHtml)
+async function card(){
+  let cap = new capture()
 
-const cap = new capture()
-cap.addHtml(imageHtml)
-cap.capture()
+  let testImage = new image('./images/Laboratory.bmp')
+  testImage['borderRadius']('10%')
+  let imageHtml = await testImage.getHtml()
+  console.log(imageHtml)
+  cap.addHtml(imageHtml)
+
+  testImage = new image('./images/Laboratory.bmp')
+  testImage['borderRadius']('50%')
+  testImage['top']('200px')
+  imageHtml = await testImage.getHtml()
+  console.log(imageHtml)
+  cap.addHtml(imageHtml)
+
+  testImage = new image('./images/Laboratory.bmp')
+  testImage['borderRadius']('0%')
+  testImage['left']('200px')
+  imageHtml = await testImage.getHtml()
+  console.log(imageHtml)
+  cap.addHtml(imageHtml)
+
+  testImage = new image('./images/Laboratory.bmp')
+  testImage['borderRadius']('0%')
+  testImage['left']('200px')
+  testImage['top']('200px')
+  imageHtml = await testImage.getHtml()
+  console.log(imageHtml)
+  cap.addHtml(imageHtml)
+
+
+  cap.capture()
+}
+
+card()

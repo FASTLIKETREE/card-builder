@@ -21,6 +21,7 @@ class capture {
   }
 
   addHtml(html) {
+    console.log(JSON.stringify(html, null, 4))
     fs.appendFileSync(`${__dirname}/${this.htmlFile}`, html + '\n')
   }
 

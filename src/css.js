@@ -6,22 +6,22 @@ const color = /^#\d{6}$/
 
 css = {
   img : {
-    'border-radius' : [percentPos, pixelPos]
+    'border-radius' : [percentPos, pixelPos],
     'box-shadow' : {
-        'h-offset': [pixelPos]
-        'v-offset': [pixelPos]
-        'blur': [pixelPos]
-        'spread': [pixelPos]
+        'h-offset': [pixelPos],
+        'v-offset': [pixelPos],
+        'blur': [pixelPos],
+        'spread': [pixelPos],
         'color': [color],
-        'inset': [/inset/],
-      }
-    'height',
-    'border'
-    'padding',
-    'width'
+        'inset': ['inset']
+      },
+    'top': [percentPos, pixelPos],
+    'left': [percentPos, pixelPos],
+    'height': [percentPos, ppixelPos],
+    'width': [percentPos, ppixelPos]
+    //'border'
+    //'padding',
   }
-
-
 }
 
 export { css }
