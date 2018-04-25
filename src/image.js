@@ -1,9 +1,11 @@
 import { parseCss } from './helper'
+import { imgStats } from './imgStats'
 
-const sizeOf = promisify(imageSize);
 
 class image {
   constructor(src){
+    const splitSrc = src.split('/')
+    this.name = splitSrc[splitSrc.length - 1]
     this.src = src
     this.css = {
       position: 'absolute',
@@ -20,26 +22,25 @@ class image {
     this.css['opacity'] = opacity
   }
 
-  left(left) {
-    this.css['left'] = left
-  }
+//  left(left) {
+//    this.css['left'] = left
+//  }
+//
+//  top(top) {
+//    this.css['top'] = top 
+//  }
 
-  top(top) {
-    this.css['top'] = top 
-  }
-
-  async getHtml() {
-    const dimensions = await sizeOf(this.src)
-    console.log(JSON.stringify(dimensions, null, 4))
+  getHtml() {
+    console.log(imgStats)
     let wrapperDivStyle = `
       position:absolute;
       top:${this.css['top']};
       left:${this.css['left']};
-      width:${dimensions.width};
-      height:${dimensions.height};
+      width:${imgStats[this.name].width};
+      height:${imgStats[this.name].height};
       `
     wrapperDivStyle = wrapperDivStyle.replace(/\s+/g,'')
-    return `<div style=${wrapperDivStyle}><img src="${this.src}" style="${parseCss(this.css)}"></img></div>`
+    return `<div style=${wrapperDivStyle}><img src="./img/${this.src}" style="${parseCss(this.css)}"></img></div>`
   }
 
   //addTextNode

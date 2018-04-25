@@ -10,32 +10,32 @@ import log from 'fancy-log'
 const exec = childProcess.exec
 
 const src = './src'
-const images = './images'
+const img = './img'
 const build = './build'
 const dist = './dist'
 
-//Keep in case we need to transform images in the build step
-gulp.task('image', function(cb) {
+//Keep in case we need to transform imgs in the build step
+gulp.task('img', function(cb) {
   runSequence(
-    'imageBuild',
-    'imageDist',
-    'imageCache',
+    'imgBuild',
+    'imgDist',
+    'imgCache',
     cb 
     )
 })
 
-gulp.task('imageBuild', function(){
-  return gulp.src([images + '/*'])
-  .pipe(gulp.dest(build + '/images'))
+gulp.task('imgBuild', function(){
+  return gulp.src([img + '/*'])
+  .pipe(gulp.dest(build + '/img'))
 })
 
-gulp.task('imageDist', function(){
-  return gulp.src([build + '/images/*'])
-  .pipe(gulp.dest(dist + '/images'))
+gulp.task('imgDist', function(){
+  return gulp.src([build + '/img/*'])
+  .pipe(gulp.dest(dist + '/img'))
 })
 
-gulp.task('imageCache', function(cb){
-  exec(`node ${build}/index.js`, function (err, stdout, stderr) {
+gulp.task('imgCache', ['js'], function(cb){
+  exec('"./node_modules/.bin/babel-node" "./src/imgCache/imgCache.js"', function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
     cb(err)
@@ -43,7 +43,7 @@ gulp.task('imageCache', function(cb){
 })
 
 gulp.task('js', ['lint'], function(){
-  return gulp.src(['./index.js', src + '/**/*.js'])
+  return gulp.src(['./index.js', src + '/*.js'])
   .pipe(babel())
   .pipe(gulp.dest(dist))
 })
@@ -54,7 +54,7 @@ gulp.task('lint', function() {
 })
 
 gulp.task('watchCode', function() {
-  return watch(['./index.js', src + '/**/*.js', images + '/*'], function() {
+  return watch(['./index.js', src + '/*.js'], function() {
     runSequence('js')
   })
 })
