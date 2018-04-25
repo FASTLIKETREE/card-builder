@@ -17,7 +17,7 @@ glob(__dirname + '/../build/images/*', async function(err, files) {
     console.log(test)
   }
 
-  const parr2= await Promise.all(parr)
+  const parr2 = await Promise.all(parr)
 
   console.log(JSON.stringify(parr, null, 4))
   console.log(JSON.stringify(parr2, null, 4))

@@ -55,7 +55,7 @@ gulp.task('lint', function() {
 
 gulp.task('watchCode', function() {
   return watch(['./index.js', src + '/**/*.js', images + '/*'], function() {
-    runSequence('build')
+    runSequence('js')
   })
 })
 
