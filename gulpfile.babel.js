@@ -34,7 +34,7 @@ gulp.task('imgDist', function(){
   .pipe(gulp.dest(dist + '/img'))
 })
 
-gulp.task('imgCache', ['js'], function(cb){
+gulp.task('imgCache', function(cb){
   exec('"./node_modules/.bin/babel-node" "./src/imgCache/imgCache.js"', function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
@@ -51,6 +51,8 @@ gulp.task('js', ['lint'], function(){
 gulp.task('lint', function() {
   return gulp.src([src + '/**/*.js'])
   .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError())
 })
 
 gulp.task('watchCode', function() {
@@ -65,7 +67,7 @@ gulp.task('watchCard', function() {
   })
 })
 
-gulp.task('chrome', function() {
+gulp.task('watchChrome', function() {
   return watch(dist + '/capture.html', function() {
     runSequence('refresh')
   })

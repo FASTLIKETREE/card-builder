@@ -1,11 +1,7 @@
-import childProcess from 'child_process'
 import fs from 'fs'
 
-//const execSync = childProcess.execSync
-const execSync = childProcess.execFile
-
 class capture {
-  constructor(out) {
+  constructor(imgObj, out) {
     this.htmlFile = 'capture.html'
     if (!out) {
       this.out = 'capture.bmp'
