@@ -6,6 +6,7 @@ import eslint from 'gulp-eslint'
 import watch from 'gulp-watch'
 import request from 'request'
 import log from 'fancy-log'
+import gutil from 'gulp-util'
 
 const exec = childProcess.exec
 
@@ -51,8 +52,10 @@ gulp.task('js', ['lint'], function(){
 gulp.task('lint', function() {
   return gulp.src([src + '/**/*.js'])
   .pipe(eslint())
+  .on('error', gutil.log)
   .pipe(eslint.format())
-  .pipe(eslint.failAfterError())
+  .on('error', gutil.log)
+  //.pipe(eslint.failAfterError())
 })
 
 gulp.task('watchCode', function() {
