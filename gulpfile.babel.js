@@ -25,17 +25,17 @@ gulp.task('img', function(cb) {
     )
 })
 
-gulp.task('imgBuild', function(){
+gulp.task('imgBuild', function() {
   return gulp.src([img + '/*'])
   .pipe(gulp.dest(build + '/img'))
 })
 
-gulp.task('imgDist', function(){
+gulp.task('imgDist', function() {
   return gulp.src([build + '/img/*'])
   .pipe(gulp.dest(dist + '/img'))
 })
 
-gulp.task('imgCache', function(cb){
+gulp.task('imgCache', function(cb) {
   exec('"./node_modules/.bin/babel-node" "./src/imgCache/imgCache.js"', function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
@@ -43,7 +43,7 @@ gulp.task('imgCache', function(cb){
   })
 })
 
-gulp.task('js', ['lint'], function(){
+gulp.task('js', ['lint'], function() {
   return gulp.src(['./index.js', src + '/*.js'])
   .pipe(babel())
   .pipe(gulp.dest(dist))
@@ -65,14 +65,12 @@ gulp.task('watchCode', function() {
 })
 
 gulp.task('watchCard', function() {
-  return watch([dist + '/index.js'], function() {
-    runSequence('genCard')
-  })
-})
-
-gulp.task('watchChrome', function() {
-  return watch(dist + '/capture.html', function() {
-    runSequence('refresh')
+  return watch([dist + '/index.js'], function(cb) {
+    runSequence(
+      'genCard',
+      'refresh',
+      cb
+    )
   })
 })
 

@@ -1,5 +1,7 @@
 import fs from 'fs'
 
+//This will be to manipulate the top level vector graphic that will overlay the image,
+//remove the image that exists outside of the graphic, and set that outside area to transparent
 class capture {
   constructor(imgObj, out) {
     this.htmlFile = 'capture.html'
