@@ -15,8 +15,8 @@ class img extends node {
 
   getHtml() {
     const props = this.getPropertyString()
-    const imgSource = `./img/${this.name}.${imgStats[this.name].type}`
-    return `<img src=${imgSource} style=${props}>`
+    const imgSource = `${__dirname}/img/${this.name}.${imgStats[this.name].type}`
+    return `<img src=${imgSource} style="${props}">`
   }
 }
 

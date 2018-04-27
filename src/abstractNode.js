@@ -12,7 +12,7 @@ class node {
     for (const key of Object.keys(this.css)) {
       propString += `${key}:${this.css[key]};`
     }
-    return propString
+    return `"${propString}"`
   }
 }
 
