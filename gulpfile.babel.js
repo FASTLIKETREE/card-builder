@@ -64,21 +64,17 @@ gulp.task('watchCode', function() {
   })
 })
 
-gulp.task('watchCard', function() {
-  return watch([dist + '/index.js'], function(cb) {
-    runSequence(
-      'genCard',
-      'refresh',
-      cb
-    )
-  })
-})
-
 gulp.task('genCard', function(cb) {
   exec(`node ${dist}/index.js`, function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
     cb(err)
+  })
+})
+
+gulp.task('watchCard', function() {
+  return watch([dist + '/index.js'], function() {
+    runSequence('genCard')
   })
 })
 

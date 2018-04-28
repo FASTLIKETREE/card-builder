@@ -1,12 +1,7 @@
-//import { image } from './image'
-//import { capture } from './capture'
 import fs from 'fs'
 import { container } from './container'
 
 async function card(){
-  //let cap = new capture()
-
-
   let textNode 
   let card = new container()
   const { containerNode, imgNode } = card.addImage('Laboratory')
@@ -20,12 +15,13 @@ async function card(){
   textNode.setCssProperty('top', '50%')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
 
-  textNode = containerNode.addText('Inner container node text')
+  textNode = containerNode.addText('Inner container node text WOOHO')
   textNode = textNode.textNode
   textNode.setCssProperty('left', '50%')
   textNode.setCssProperty('top', '50%')
+  textNode.setCssProperty('width', '100%')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
-  textNode.setCssProperty('color', 'white')
+  textNode.setCssProperty('color', 'brown')
 
   debugger
   const cardHtml = card.getHtml(3)
@@ -45,40 +41,6 @@ ${cardHtml}
 
   console.log(html)
   fs.writeFileSync('./card.html', html)
-
-
-  //let testImage = new image('Laboratory.bmp')
-  //testimage.setCssProperty('border-radius', '10%')
-
-  //let imageHtml = await testImage.getHtml()
-  //console.log(imageHtml)
-
-  //cap.addHtml(imageHtml)
-
-//  testImage = new image('./images/Laboratory.bmp')
-//  testImage['borderRadius']('50%')
-//  testImage['top']('200px')
-//  imageHtml = await testImage.getHtml()
-//  console.log(imageHtml)
-//  cap.addHtml(imageHtml)
-//
-//  testImage = new image('./images/Laboratory.bmp')
-//  testImage['borderRadius']('0%')
-//  testImage['left']('200px')
-//  imageHtml = await testImage.getHtml()
-//  console.log(imageHtml)
-//  cap.addHtml(imageHtml)
-//
-//  testImage = new image('./images/Laboratory.bmp')
-//  testImage['borderRadius']('0%')
-//  testImage['left']('200px')
-//  testImage['top']('200px')
-//  imageHtml = await testImage.getHtml()
-//  console.log(imageHtml)
-//  cap.addHtml(imageHtml)
-
-
-//  cap.capture()
 }
 
 card()
