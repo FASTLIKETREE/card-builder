@@ -4,35 +4,42 @@ import { container } from './container'
 async function card(){
   let textNode 
   let card = new container()
-  const { containerNode, imgNode } = card.addImage('Laboratory')
-  console.log(containerNode + '<-- container node')
-  console.log(typeof containerNode.addText + '<-- container node')
-  imgNode.setCssProperty('border-radius', '20%')
+  //const { containerNode, imgNode } = card.addImage('laboratory')
+  let imgNode = card.addImage('laboratory')
+  //imgNode.setCssProperty('border-radius', '40%')
   //imgNode.setCssProperty('width', '100px')
 
-  textNode = card.addText('This is some centered text neat!')
-  textNode = textNode.textNode
+  let containerNode = imgNode.getContainerNode()
+
+  imgNode = containerNode.addImage('star')
+  let container1 = imgNode.getContainerNode()
+
+  container1.setCssProperty('bottom', '10px')
+  container1.setCssProperty('right', '10px')
+
+  textNode = container1.addText('X')
   textNode.setCssProperty('left', '50%')
   textNode.setCssProperty('top', '50%')
+  textNode.setCssProperty('color', 'white')
+  textNode.setCssProperty('font-size', '40px')
+  textNode.setCssProperty('text-align', 'center')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
 
   textNode = containerNode.addText('Inner container node text WOOHO')
-  textNode = textNode.textNode
   textNode.setCssProperty('left', '50%')
   textNode.setCssProperty('top', '60%')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
-  textNode.setCssProperty('color', 'green')
+  textNode.setCssProperty('color', 'pink')
 
-  //textNode = containerNode.addText('I LOVE SWEETIE')
-  //textNode = textNode.textNode
-  //textNode.setCssProperty('left', '50%')
-  //textNode.setCssProperty('top', '80%')
-  //textNode.setCssProperty('color', 'white')
-  
+  textNode = containerNode.addText('I LOVE SWEETIE')
+  textNode.setCssProperty('left', '50%')
+  textNode.setCssProperty('top', '50%')
+  textNode.setCssProperty('color', 'white')
+  textNode.setCssProperty('font-size', '40px')
+  textNode.setCssProperty('text-align', 'center')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
 
-  debugger
-  const cardHtml = card.getHtml(3)
+  const cardHtml = card.getHtml()
   console.log(cardHtml)
 
   const html = `
@@ -47,7 +54,7 @@ ${cardHtml}
     </body>
   </html>`
 
-  console.log(html)
+  //console.log(html)
   fs.writeFileSync('./card.html', html)
 }
 

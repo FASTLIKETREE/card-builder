@@ -16,18 +16,13 @@ glob(__dirname + '/' + imgFolder + '/*', async function(err, files) {
   }
 
   const resolvedParr = await Promise.all(parr)
-  //console.log(resolvedParr)
 
   for (const [index, stats] of resolvedParr.entries()) {
     const sFileName = files[index].split('/')
     let fileName = sFileName[sFileName.length - 1]
-    //console.log(stats)
-    //console.log(stats.type)
-    //console.log(fileName)
     fileName = fileName.replace('.' + stats.type, '')
     imgCache[fileName] = stats
   }
-  //console.log(imgCache)
   let imgCacheJSON = JSON.stringify(imgCache, null, 2)
   imgCacheJSON = imgCacheJSON.replace(/"/g, '\'')
 

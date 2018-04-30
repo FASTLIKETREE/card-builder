@@ -68,8 +68,9 @@ gulp.task('genCard', function(cb) {
   exec(`node ${dist}/index.js`, function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
-    cb(err)
+    cb()
   })
+  .on('error', gutil.log)
 })
 
 gulp.task('watchCard', function() {
