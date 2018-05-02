@@ -10,7 +10,6 @@ import { svg, mask, rect, polygon } from './svg'
 // 23       <rect x='0' y='200' width='300' height='200' style='stroke:none fill: #666666'></rect>
 // 24       <polyline id='hexagon' points='87,0 174,50 174,150 87,200 0,150 0,50 87,0' style='stroke:none fill: #111111'/>
 // 25     </mask>
-// 26       
 // 27       <rect x='0' y='0'  mask='url(#mask3)' width='300' height='400' style='stroke:none fill: #ff0000'></rect>
 // 28   </svg>
 
