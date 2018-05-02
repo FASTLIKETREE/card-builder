@@ -43,8 +43,14 @@ gulp.task('imgCache', function(cb) {
   })
 })
 
-gulp.task('js', ['lint'], function() {
-  return gulp.src(['./index.js', src + '/*.js'])
+gulp.task('js', function() {
+  return gulp.src([src + '/*.js'])
+  .pipe(babel())
+  .pipe(gulp.dest(dist))
+})
+
+gulp.task('index', function() {
+  return gulp.src(['./index.js'])
   .pipe(babel())
   .pipe(gulp.dest(dist))
 })
@@ -58,25 +64,26 @@ gulp.task('lint', function() {
   //.pipe(eslint.failAfterError())
 })
 
-gulp.task('watchCode', function() {
-  return watch(['./index.js', src + '/*.js'], function() {
-    runSequence('js')
+gulp.task('watch', function() {
+  const watcher = watch(['./index.js', src + '/*.js'], { verbose: true }, function() {
+    runSequence(
+      'js',
+      'index',
+      'genCard'
+      )
+  })
+  watcher.on('unlink', function () {
+    log('File unlinked, restarting watcher')
+    gulp.start('watch')
   })
 })
 
-gulp.task('genCard', function(cb) {
+gulp.task('genCard', function() {
   exec(`node ${dist}/index.js`, function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
-    cb()
   })
   .on('error', gutil.log)
-})
-
-gulp.task('watchCard', function() {
-  return watch([dist + '/index.js'], function() {
-    runSequence('genCard')
-  })
 })
 
 gulp.task('refresh', function(cb) {
