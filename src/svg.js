@@ -5,6 +5,8 @@ class svg extends node {
     super()
     this.svgNodes = []
     this.html = ''
+    this.setCssProperty('width', '100%')
+    this.setCssProperty('height', '100%')
   }
 
   addSvgNode(svgNode) {
@@ -18,7 +20,7 @@ class svg extends node {
   getMask() {
     return this.mask
   }
-  
+
   getHtml(depth = 0) {
     const indentation = '  '.repeat(depth)
     const propertyString = this.getPropertyString()
@@ -91,6 +93,15 @@ class rect extends maskableSvg {
     this.height = height
   }
 
+  getBoundingBox() {
+    return {
+      top: this.y,
+      left: this.x,
+      bottom: this.y + this.height,
+      right: this.x + this.width
+    }
+  }
+
   getHtml() {
     const propertyString = this.getPropertyString()
      return `<rect x='${this.x}' y='${this.y}' width='${this.width}' height='${this.height}' ${this.maskHtml} style=${propertyString}></rect>`
@@ -105,6 +116,15 @@ class circle extends maskableSvg {
     this.r = r
   }
 
+  getBoundingBox() {
+    return {
+      top: this.y + this.r,
+      left: this.x - this.r,
+      bottom: this.y - this.r,
+      right: this.x + this.r
+    }
+  }
+
   getHtml() {
     const propertyString = this.getPropertyString()
     return `<circle x='${this.x}' y='${this.y}' r='${this.r}' ${this.maskHtml} style=${propertyString}></circle>`
@@ -116,8 +136,17 @@ class ellipse extends maskableSvg {
     super()
     this.x = x
     this.y = y
-    this.rx = rx 
+    this.rx = rx
     this.ry = ry
+  }
+
+  getBoundingBox() {
+    return {
+      top: this.y + this.ry,
+      left: this.x - this.rx,
+      bottom: this.y - this.ry,
+      right: this.x + this.rx
+    }
   }
 
   getHtml() {
@@ -148,6 +177,42 @@ class polygon extends maskableSvg {
     }
   }
 
+  getBoundingBox() {
+    let t, l, b, r
+    for (const point of this.pointArray) {
+      if (!l || !r) {
+        l = point.x
+        r = point.x
+      }
+      if (!t || !b) {
+        t = point.y
+        b = point.y
+      }
+
+      if (point.x < l) {
+        l = point.x
+      }
+      if (point.x > r) {
+        r = point.x
+      }
+      if (point.y < t) {
+        t = point.y
+      }
+      if (point.y > b) {
+        b = point.y
+      }
+    }
+    console.log(this.pointArray)
+
+    return {
+      top: t,
+      left: l,
+      bottom: b,
+      right: r
+    }
+  }
+
+
   getHtml() {
     const propertyString = this.getPropertyString()
     let pointString = ''
@@ -164,7 +229,7 @@ function round(number, precision) {
   const shift = function (number, precision, reverseShift) {
     if (reverseShift) {
       precision = -precision
-    }  
+    }
     const numArray = ('' + number).split('e')
     return +(numArray[0] + 'e' + (numArray[1] ? (+numArray[1] + precision) : precision))
   }
