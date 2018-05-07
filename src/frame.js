@@ -14,13 +14,25 @@ class frame {
     this.svg = new svg()
     this.mask = new mask('frame')
     this.svg.setMask(this.mask)
+    this.boundingBox = shape.getBoundingBox()
 
-    const bound = shape.getBoundingBox()
-    let maskRect = new rect(bound.left - 3, bound.top - 3, bound.right - bound.left + 6, bound.bottom - bound.top + 6)
+    let maskRect = new rect(
+      this.boundingBox.x - 3, 
+      this.boundingBox.y - 3,
+      this.boundingBox.width + 6,
+      this.boundingBox.height + 6)
+
     this.mask.addSvgNode(maskRect)
+    //maskRect.setCssProperty('fill', '#ffffff')
     maskRect.setCssProperty('fill', '#ffffff')
 
-    let fillRect = new rect(bound.left - 3, bound.top - 3, bound.right - bound.left + 6, bound.bottom - bound.top + 6)
+    let fillRect = new rect(
+      this.boundingBox.x - 3, 
+      this.boundingBox.y - 3,
+      this.boundingBox.width + 6,
+      this.boundingBox.height + 6)
+
+    //fillRect.setCssProperty('fill', '#ff55ff')
     fillRect.setCssProperty('fill', '#ff55ff')
     fillRect.setMaskId('frame')
     this.svg.addSvgNode(fillRect)
@@ -28,6 +40,11 @@ class frame {
     shape.setCssProperty('fill', '#000000')
     this.mask.addSvgNode(shape)
   }
+
+  getBoundingBox() {
+    return this.boundingBox
+  }
+
   getHtml() {
     return this.svg.getHtml()
   }

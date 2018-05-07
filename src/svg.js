@@ -95,10 +95,10 @@ class rect extends maskableSvg {
 
   getBoundingBox() {
     return {
-      top: this.y,
-      left: this.x,
-      bottom: this.y + this.height,
-      right: this.x + this.width
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height
     }
   }
 
@@ -118,10 +118,14 @@ class circle extends maskableSvg {
 
   getBoundingBox() {
     return {
-      top: this.y + this.r,
-      left: this.x - this.r,
-      bottom: this.y - this.r,
-      right: this.x + this.r
+      x: this.x - this.r,
+      y: this.y - this.r,
+      width: 2 * this.r,
+      height: 2 * this.r
+      //top: this.y + this.r,
+      //left: this.x - this.r,
+      //bottom: this.y - this.r,
+      //right: this.x + this.r
     }
   }
 
@@ -142,10 +146,15 @@ class ellipse extends maskableSvg {
 
   getBoundingBox() {
     return {
-      top: this.y + this.ry,
-      left: this.x - this.rx,
-      bottom: this.y - this.ry,
-      right: this.x + this.rx
+      x: this.x - rx,
+      y: this.y - ry,
+      width: 2 * rx,
+      height: 2 * ry
+
+      //top: this.y + this.ry,
+      //left: this.x - this.rx,
+      //bottom: this.y - this.ry,
+      //right: this.x + this.rx
     }
   }
 
@@ -169,17 +178,25 @@ class polygon extends maskableSvg {
     const rotationRadians = (2 * Math.PI) * (degrees / 360)
 
     for (let i = 0; i < sides; i += 1) {
-      let x = xPos + size * Math.cos((i * 2 * Math.PI / sides) + rotationRadians)
-      x = round(x, 3)
-      let y = yPos + size * Math.sin((i * 2 * Math.PI / sides) + rotationRadians)
-      y = round(y, 3)
+      console.log('Below would be added to xPos')
+      console.log(size * Math.cos((i * 2 * Math.PI / sides) + rotationRadians))
+      let x = xPos + size + size * Math.cos((i * 2 * Math.PI / sides) + rotationRadians)
+      //x = round(x, 3)
+      x = round(x, 0)
+      let y = yPos + size + size * Math.sin((i * 2 * Math.PI / sides) + rotationRadians)
+      //y = round(y, 3)
+      y = round(y, 0)
       this.pointArray.push({ x, y })
     }
+    console.log('below is a point')
+    console.log(this.pointArray)
+    console.log('above is a point')
   }
 
   getBoundingBox() {
     let t, l, b, r
     for (const point of this.pointArray) {
+      console.log(point)
       if (!l || !r) {
         l = point.x
         r = point.x
@@ -205,10 +222,14 @@ class polygon extends maskableSvg {
     console.log(this.pointArray)
 
     return {
-      top: t,
-      left: l,
-      bottom: b,
-      right: r
+      //top: t,
+      //left: l,
+      //bottom: b,
+      //right: r
+      x: l,
+      y: t,
+      width: r - l,
+      height: b - t
     }
   }
 
