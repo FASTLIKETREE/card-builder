@@ -6,6 +6,14 @@ class img extends node {
     super()
     this.name = name
   }
+  
+  addImage(name) {
+    return this.containerNode.addImage(name)
+  }
+
+  addText(text) {
+    return this.containerNode.addText(text)
+  }
 
   setContainerNode(node) {
     this.containerNode = node
@@ -13,6 +21,17 @@ class img extends node {
 
   getContainerNode() {
     return this.containerNode
+  }
+
+  setCssProperty(key, value) {
+    if (key == 'top' ||
+    key == 'left' ||
+    key == 'bottom' || 
+    key == 'right') {
+      this.containerNode.setCssProperty(key, value)
+    } else {
+      Object.getPrototypeOf(this.constructor.prototype).setCssProperty.call(this, key, value);
+    }
   }
 
   getHtml() {

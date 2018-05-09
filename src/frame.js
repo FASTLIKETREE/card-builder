@@ -1,4 +1,6 @@
+import fs from 'fs'
 import { svg, mask, rect, polygon } from './svg'
+import { container } from './container'
 
 // 20   <svg width='300' height='400'>
 // 21     <mask id='mask3' x='0' y='0' width='300' height='400' >
@@ -9,13 +11,23 @@ import { svg, mask, rect, polygon } from './svg'
 // 27       <rect x='0' y='0'  mask='url(#mask3)' width='300' height='400' style='stroke:none fill: #ff0000'></rect>
 // 28   </svg>
 
-class frame {
+class frame extends container {
   constructor(shape) {
+    super()
     this.svg = new svg()
     this.mask = new mask('frame')
     this.svg.setMask(this.mask)
     this.boundingBox = shape.getBoundingBox()
+    
+    // Save bounding box string in page to alert watcher of how to crop
+    // const boundingBoxArray = Object.values(boundingBox)
+    this.boundingString = `<!-- ${Object.values(this.boundingBox).join(', ')} -->`
+    this.setCssProperty('top', this.boundingBox.y)
+    this.setCssProperty('left', this.boundingBox.x)
+    this.setCssProperty('width', this.boundingBox.width)
+    this.setCssProperty('height', this.boundingBox.height)
 
+    // Setup svg mask for frame
     let maskRect = new rect(
       this.boundingBox.x - 3, 
       this.boundingBox.y - 3,
@@ -23,7 +35,6 @@ class frame {
       this.boundingBox.height + 6)
 
     this.mask.addSvgNode(maskRect)
-    //maskRect.setCssProperty('fill', '#ffffff')
     maskRect.setCssProperty('fill', '#ffffff')
 
     let fillRect = new rect(
@@ -32,7 +43,6 @@ class frame {
       this.boundingBox.width + 6,
       this.boundingBox.height + 6)
 
-    //fillRect.setCssProperty('fill', '#ff55ff')
     fillRect.setCssProperty('fill', '#ff55ff')
     fillRect.setMaskId('frame')
     this.svg.addSvgNode(fillRect)
@@ -41,36 +51,37 @@ class frame {
     this.mask.addSvgNode(shape)
   }
 
-  getBoundingBox() {
-    return this.boundingBox
-  }
-
-  getHtml() {
-    return this.svg.getHtml()
+  save() {
+    let insertText = ''
+    for (let i = 0; i < arguments.length; i++) {
+      insertText += arguments[i]
+    }
+const html = `${this.boundingString}
+<html>
+  <style>
+    * {
+      position: absolute
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+  <script>
+    document.onmousemove = function(e){
+    var x = e.pageX;
+    var y = e.pageY;
+    document.title = "X is "+x+" and Y is "+y;
+    }
+  </script>
+  <body>
+    ${this.getHtml()}
+    ${this.svg.getHtml()}
+  </body>
+</html>`
+    fs.writeFileSync('./card.html', html)
   }
 }
-
-// let svgContainer = new svg()
-//  let svgMask = new mask('frame')
-//  svgContainer.setMask(svgMask)
-//
-//  let maskRect = new rect(0, 0, 300, 400)
-//  maskRect.setCssProperty('fill', '#ffffff')
-//  svgMask.addSvgNode(maskRect)
-//
-//  let myPolygon = new polygon(5, 120, 150, 200, 22.5)
-//
-//  myPolygon.setCssProperty('fill', '#000000')
-//  myPolygon.setCssProperty('top', '60px')
-//  svgMask.addSvgNode(myPolygon)
-//  
-//  myPolygon.getBoundingBox
-//
-//  let myRect = new rect(0, 0, 300, 500)
-//  myRect.setCssProperty('fill', '#ff55ff')
-//  myRect.setMaskId('frame')
-//  svgContainer.addSvgNode(myRect)
-//
-//  const svgHtml = svgContainer.getHtml()
 
 export { frame }

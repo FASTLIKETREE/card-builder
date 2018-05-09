@@ -20,8 +20,9 @@ glob(__dirname + '/' + imgFolder + '/*', async function(err, files) {
   for (const [index, stats] of resolvedParr.entries()) {
     const sFileName = files[index].split('/')
     let fileName = sFileName[sFileName.length - 1]
-    fileName = fileName.replace('.' + stats.type, '')
-    imgCache[fileName] = stats
+    const nameExt = fileName.split('.')
+    stats.type = nameExt[1]
+    imgCache[nameExt[0]] = stats
   }
   let imgCacheJSON = JSON.stringify(imgCache, null, 2)
   imgCacheJSON = imgCacheJSON.replace(/"/g, '\'')

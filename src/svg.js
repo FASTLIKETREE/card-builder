@@ -122,10 +122,6 @@ class circle extends maskableSvg {
       y: this.y - this.r,
       width: 2 * this.r,
       height: 2 * this.r
-      //top: this.y + this.r,
-      //left: this.x - this.r,
-      //bottom: this.y - this.r,
-      //right: this.x + this.r
     }
   }
 
@@ -150,11 +146,6 @@ class ellipse extends maskableSvg {
       y: this.y - ry,
       width: 2 * rx,
       height: 2 * ry
-
-      //top: this.y + this.ry,
-      //left: this.x - this.rx,
-      //bottom: this.y - this.ry,
-      //right: this.x + this.rx
     }
   }
 
@@ -222,10 +213,6 @@ class polygon extends maskableSvg {
     console.log(this.pointArray)
 
     return {
-      //top: t,
-      //left: l,
-      //bottom: b,
-      //right: r
       x: l,
       y: t,
       width: r - l,
