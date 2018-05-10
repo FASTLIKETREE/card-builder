@@ -20,7 +20,6 @@ class frame extends container {
     this.boundingBox = shape.getBoundingBox()
     
     // Save bounding box string in page to alert watcher of how to crop
-    // const boundingBoxArray = Object.values(boundingBox)
     this.boundingString = `<!-- ${Object.values(this.boundingBox).join(', ')} -->`
     this.setCssProperty('top', this.boundingBox.y)
     this.setCssProperty('left', this.boundingBox.x)

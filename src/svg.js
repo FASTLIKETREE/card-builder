@@ -104,7 +104,7 @@ class rect extends maskableSvg {
 
   getHtml() {
     const propertyString = this.getPropertyString()
-     return `<rect x='${this.x}' y='${this.y}' width='${this.width}' height='${this.height}' ${this.maskHtml} style=${propertyString}></rect>`
+     return `<rect shape-rendering='optimizeSpeed' x='${this.x}' y='${this.y}' width='${this.width}' height='${this.height}' ${this.maskHtml} style=${propertyString}></rect>`
   }
 }
 
@@ -118,8 +118,10 @@ class circle extends maskableSvg {
 
   getBoundingBox() {
     return {
-      x: this.x - this.r,
-      y: this.y - this.r,
+      //x: this.x - this.r,
+      //y: this.y - this.r,
+      x: this.x,
+      y: this.y,
       width: 2 * this.r,
       height: 2 * this.r
     }
@@ -127,7 +129,7 @@ class circle extends maskableSvg {
 
   getHtml() {
     const propertyString = this.getPropertyString()
-    return `<circle x='${this.x}' y='${this.y}' r='${this.r}' ${this.maskHtml} style=${propertyString}></circle>`
+    return `<circle shape-rendering='optimizeSpeed' cx='${this.x + this.r}' cy='${this.y + this.r}' r='${this.r}' ${this.maskHtml} style=${propertyString}></circle>`
   }
 }
 
@@ -142,16 +144,16 @@ class ellipse extends maskableSvg {
 
   getBoundingBox() {
     return {
-      x: this.x - rx,
-      y: this.y - ry,
-      width: 2 * rx,
-      height: 2 * ry
+      x: this.x,
+      y: this.y,
+      width: 2 * this.rx,
+      height: 2 * this.ry
     }
   }
 
   getHtml() {
     const propertyString = this.getPropertyString()
-    return `<ellipse x='${this.x}' y='${this.y}' rx='${this.rx}' ry='${this.ry}' ${this.maskHtml} style=${propertyString}></ellipse>`
+    return `<ellipse shape-rendering='optimizeSpeed' cx='${this.x + this.rx}' cy='${this.y + this.ry}' rx='${this.rx}' ry='${this.ry}' ${this.maskHtml} style=${propertyString}></ellipse>`
   }
 }
 
@@ -229,7 +231,7 @@ class polygon extends maskableSvg {
     }
 
 
-    return `<polygon ${this.maskHtml} points='${pointString}'  ${this.maskHtml} style=${propertyString}></polygon>`
+    return `<polygon shape-rendering='optimizeSpeed' ${this.maskHtml} points='${pointString}'  ${this.maskHtml} style=${propertyString}></polygon>`
   }
 }
 
