@@ -171,19 +171,14 @@ class polygon extends maskableSvg {
     const rotationRadians = (2 * Math.PI) * (degrees / 360)
 
     for (let i = 0; i < sides; i += 1) {
-      console.log('Below would be added to xPos')
-      console.log(size * Math.cos((i * 2 * Math.PI / sides) + rotationRadians))
       let x = xPos + size + size * Math.cos((i * 2 * Math.PI / sides) + rotationRadians)
-      //x = round(x, 3)
-      x = round(x, 0)
       let y = yPos + size + size * Math.sin((i * 2 * Math.PI / sides) + rotationRadians)
-      //y = round(y, 3)
+
+      x = round(x, 0)
       y = round(y, 0)
+
       this.pointArray.push({ x, y })
     }
-    console.log('below is a point')
-    console.log(this.pointArray)
-    console.log('above is a point')
   }
 
   getBoundingBox() {
@@ -235,6 +230,53 @@ class polygon extends maskableSvg {
   }
 }
 
+class boundedPolygon extends maskableSvg {
+  constructor(x, y, width, height, sides, rotation = 0) {
+    super()
+    this.pointArray = []
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
+    this.sides = sides
+
+    let degrees = (rotation % 360)
+    degrees = degrees < 0 ? 360 + degrees : degrees
+    const rotationRadians = (2 * Math.PI) * (degrees / 360)
+
+    for (let i = 0; i < sides; i += 1) {
+
+      let x = this.x + width/2 + width/2 * Math.cos((i * 2 * Math.PI / sides) + rotationRadians)
+      let y = this.y + height/2 + height/2 * Math.sin((i * 2 * Math.PI / sides) + rotationRadians)
+
+      x = round(x, 0)
+      y = round(y, 0)
+
+      this.pointArray.push({ x, y })
+    }
+  }
+
+  getBoundingBox() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height
+    }
+  }
+
+  getHtml() {
+    const propertyString = this.getPropertyString()
+    let pointString = ''
+    for (const point of this.pointArray) {
+      pointString += `${point.x},${point.y} `
+    }
+
+
+    return `<polygon shape-rendering='optimizeSpeed' ${this.maskHtml} points='${pointString}'  ${this.maskHtml} style=${propertyString}></polygon>`
+  }
+}
+
 function round(number, precision) {
   const shift = function (number, precision, reverseShift) {
     if (reverseShift) {
@@ -246,4 +288,4 @@ function round(number, precision) {
   return shift(Math.round(shift(number, precision, false)), precision, true)
 }
 
-export { svg, mask, rect, circle, ellipse, polygon }
+export { svg, mask, rect, circle, ellipse, polygon, boundedPolygon }

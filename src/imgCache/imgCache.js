@@ -1,33 +1,39 @@
 import imageSize from 'image-size'
 import glob from 'glob'
 import fs from 'fs'
-import { promisify } from 'util'
 
 const imgFolder = '../../img'
-const sizeOf = promisify(imageSize)
 
 const imgCache = {}
 
 glob(__dirname + '/' + imgFolder + '/*', async function(err, files) {
   const parr = []
+  var sizedImages = 0
 
-  for (const file of files) {
-    parr.push(sizeOf(file))
+  for (const filePath of files) {
+    imageSize(filePath, function(err, sizeData) {
+      addCacheEntry(filePath, sizeData)
+      sizedImages += 1
+      if(sizedImages == files.length) {
+        writeCache()
+      }
+    })
   }
+})
 
-  const resolvedParr = await Promise.all(parr)
+function addCacheEntry(filePath, sizeData) {
+  const sFileName = filePath.split('/')
+  let fileName = sFileName[sFileName.length - 1]
+  const nameExt = fileName.split('.')
+  imgCache[nameExt[0]] = Object.assign({}, sizeData, { type: nameExt[1] })
+}
 
-  for (const [index, stats] of resolvedParr.entries()) {
-    const sFileName = files[index].split('/')
-    let fileName = sFileName[sFileName.length - 1]
-    const nameExt = fileName.split('.')
-    stats.type = nameExt[1]
-    imgCache[nameExt[0]] = stats
-  }
-  let imgCacheJSON = JSON.stringify(imgCache, null, 2)
-  imgCacheJSON = imgCacheJSON.replace(/"/g, '\'')
+function writeCache() {
+  let cacheString = JSON.stringify(imgCache, null, 2)
+  cacheString = cacheString.replace(/"/g, '\'')
+  console.log(cacheString)
 
   fs.writeFileSync('./src/imgStats.js', 'const imgStats =\n')
-  fs.appendFileSync('./src/imgStats.js', imgCacheJSON)
+  fs.appendFileSync('./src/imgStats.js', cacheString)
   fs.appendFileSync('./src/imgStats.js', '\n\nexport { imgStats }')
-})
+}

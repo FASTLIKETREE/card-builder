@@ -7,7 +7,7 @@ class textDiv extends node {
   }
 
   getHtml() {
-    debugger
+    this.setCssProperty('z-index', 1)
     const props = this.getPropertyString()
     return `<div style=${props}>${this.text}</div>`
   }

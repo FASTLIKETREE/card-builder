@@ -71,7 +71,7 @@ const html = `${this.boundingString}
     document.onmousemove = function(e){
     var x = e.pageX;
     var y = e.pageY;
-    document.title = "X is "+x+" and Y is "+y;
+    document.title = 'X is ' + x + ' and Y is ' + y;
     }
   </script>
   <body>
