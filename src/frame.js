@@ -18,6 +18,7 @@ class frame extends container {
     this.mask = new mask('frame')
     this.svg.setMask(this.mask)
     this.boundingBox = shape.getBoundingBox()
+    this.frame = this
     
     // Save bounding box string in page to alert watcher of how to crop
     this.boundingString = `<!-- ${Object.values(this.boundingBox).join(', ')} -->`

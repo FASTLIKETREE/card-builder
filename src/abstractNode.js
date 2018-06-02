@@ -11,6 +11,10 @@ class node {
     this.css[property] = value
   }
 
+  getCssProperty(property) {
+    return this.css[property]
+  }
+
   getPropertyString() {
     let idString = ''
     if (this.id) {

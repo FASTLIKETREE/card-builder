@@ -10,37 +10,46 @@ function card(){
   let textNode 
 
   //const card = new frame(new polygon(3, 150, 60, 90, 0))
-  const card = new frame(new boundedPolygon(0, 0, 256, 256, 6, 30))
-
   //const card = new frame(new circle(80, 80, 20))
   //const card = new frame(new ellipse(80, 80, 100, 100))
   //const card = new frame(new rect(0, 0, 400, 168))
   //const card = new frame(new rect(0, 0, 400, 168))
 
-  //let treeImg = card.addImage('tree')
+  const card = new frame(new boundedPolygon(100, 100, 256, 256, 6, 30))
 
+  let bowmanImg = card.addImage('bowman')
+  //x,y of card %x, %y, %width, %height
+  //400, 40, 50%, 25%, 100%, 50%
+  //cardImg.
+  //backgroundImg.setCssProperty('clip-path', 'inset(50px 0px 0px 0px)')
+  //cardImg.setCenteredPoint(400, 40, 50%, 25%, 100%, 50%)
+
+  bowmanImg.centerImagePoint(200, 200, .5, .5, 1, .5)
+
+  //let treeImg = card.addImage('tree')
   //imgNode.setCssProperty('border-radius', '50%')
   //treeImg.setCssProperty('left', '50%')
   //treeImg.setCssProperty('top', '80px')
   //treeImg.setCssProperty('bottom', '-50%')
   //imgNode.setCssProperty('bottom', '-50%')
 
-  //textNode = imgNode.addText('This has a lot of power to wrap, you can write yourself a long card and things should be looking good. Love Wes')
-  textNode = card.addText('That has a lot of power to wrap, you can write yourself a long card and things should be looking good. Love LKSJDLGKJS')
-  textNode.setCssProperty('left', '50%')
-  textNode.setCssProperty('top', '50%')
-  //textNode.setCssProperty('background', 'white')
-  textNode.setCssProperty('width', '140px')
+  textNode = bowmanImg.addText('This has a lot of power to wrap HOW CRAZY HOW MUCH MORE DOES THIS SHILEN:S')
+  //textNode.setCssProperty('left', '50%')
+  //textNode.setCssProperty('top', '50%')
+  textNode.setCssProperty('left', '16px')
+  textNode.setCssProperty('right', '16px')
+  textNode.setCssProperty('bottom', '0px')
+  //textNode.setCssProperty('width', '160px')
   textNode.setCssProperty('color', 'white')
   textNode.setCssProperty('font-size', '14px')
   textNode.setCssProperty('text-align', 'center')
-  textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
+  //textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
 
-  let imgNode = card.addImage('laboratory')
+  //let imgNode = card.addImage('laboratory')
 
-  //let starImg = treeImg.addImage('star')
-  //starImg.setCssProperty('bottom', '30px')
-  //starImg.setCssProperty('right', '55px')
+  let swordImg = bowmanImg.addImage('sword')
+  swordImg.setCssProperty('bottom', '0px')
+  swordImg.setCssProperty('right', '16px')
 
   //textNode = starImg.addText('A')
   //textNode.setCssProperty('left', '50%')
