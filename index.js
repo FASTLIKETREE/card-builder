@@ -18,13 +18,10 @@ function card(){
   const card = new frame(new boundedPolygon(100, 100, 256, 256, 6, 30))
 
   let bowmanImg = card.addImage('bowman')
-  //x,y of card %x, %y, %width, %height
-  //400, 40, 50%, 25%, 100%, 50%
-  //cardImg.
-  //backgroundImg.setCssProperty('clip-path', 'inset(50px 0px 0px 0px)')
-  //cardImg.setCenteredPoint(400, 40, 50%, 25%, 100%, 50%)
+  let paperImg = card.addImage('paper')
 
-  bowmanImg.centerImagePoint(200, 200, .5, .5, 1, .5)
+  bowmanImg.centerImagePoint(462, 111, 0, 0, 1, .5)
+  paperImg.centerImagePoint(150, 100, 0, 1, 1, .5)
 
   //let treeImg = card.addImage('tree')
   //imgNode.setCssProperty('border-radius', '50%')
@@ -33,23 +30,29 @@ function card(){
   //treeImg.setCssProperty('bottom', '-50%')
   //imgNode.setCssProperty('bottom', '-50%')
 
-  textNode = bowmanImg.addText('This has a lot of power to wrap HOW CRAZY HOW MUCH MORE DOES THIS SHILEN:S')
-  //textNode.setCssProperty('left', '50%')
-  //textNode.setCssProperty('top', '50%')
-  textNode.setCssProperty('left', '16px')
-  textNode.setCssProperty('right', '16px')
-  textNode.setCssProperty('bottom', '0px')
-  //textNode.setCssProperty('width', '160px')
+  textNode = bowmanImg.addText('This has a lot of power to wrap text')
+  textNode.setCssProperty('left', '50%')
+  textNode.setCssProperty('top', '50%')
+  //textNode.setCssProperty('left', '16px')
+  //textNode.setCssProperty('right', '16px')
+  textNode.setCssProperty('width', '160px')
   textNode.setCssProperty('color', 'white')
   textNode.setCssProperty('font-size', '14px')
   textNode.setCssProperty('text-align', 'center')
-  //textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
+  textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
 
   //let imgNode = card.addImage('laboratory')
 
   let swordImg = bowmanImg.addImage('sword')
   swordImg.setCssProperty('bottom', '0px')
   swordImg.setCssProperty('right', '16px')
+
+  let shieldImg = bowmanImg.addImage('shield')
+  shieldImg.setCssProperty('bottom', '0px')
+  shieldImg.setCssProperty('left', '16px')
+
+  textNode = shieldImg.addText('100')
+
 
   //textNode = starImg.addText('A')
   //textNode.setCssProperty('left', '50%')

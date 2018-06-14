@@ -18,12 +18,10 @@ class container extends node {
     }
 
     const imgNode = new img(name)
-    //const containerNode = new container(stats.width, stats.height)
     const containerNode = new container()
 
     containerNode.setCssProperty('width', stats.width)
     containerNode.setCssProperty('height', stats.height)
-    console.log('setting bowman img node?')
     containerNode.setImgNode(imgNode)
     containerNode.setParentContainer(this)
     
@@ -64,85 +62,31 @@ class container extends node {
 
     this.setCssProperty('width', fillXPixels)
     this.setCssProperty('height', fillYPixels)
+    const setLeft = targetX * parentWidth - fillXPixels/2 > 0 ? targetX * parentWidth - fillXPixels/2 : 0
+    const setTop = targetY * parentHeight - fillYPixels/2 > 0 ? targetY * parentHeight - fillYPixels/2 : 0
+
+    if (setLeft + fillXPixels > parentWidth) {
+      this.setCssProperty('right', '0px')
+    } else {
+      this.setCssProperty('left', setLeft)
+    }
+
+    if (setTop + fillYPixels > parentHeight) {
+      this.setCssProperty('bottom', '0px')
+    } else {
+      this.setCssProperty('top', setTop)
+    }
+
     this.setCssProperty('overflow', 'hidden')
-  
-    this.getImgNode().setCssProperty('left', -imgLeft)
-    this.getImgNode().setCssProperty('top', -imgTop)
 
-    //let clipTop = imgTop - fillYPixels/2
-    //let clipRight = width - imgLeft - fillXPixels/2
-    //let clipBottom = height - imgTop - fillYPixels/2
-    //let clipLeft = imgLeft - fillXPixels/2 
-
-    //const overflowTop = fillYPixels/2 - (targetY * parentHeight) > 0 ? fillYPixels/2 - (targetY * parentHeight) : 0
-    //const overflowRight = fillXPixels/2 + (targetX * parentWidth) > parentWidth ? fillXPixels/2 + (targetX * parentWidth) - parentWidth : 0
-    //const overflowBottom = fillYPixels/2 + (targetY * parentHeight) > parentHeight ? fillYPixels/2 + (targetY * parentHeight) - parentHeight : 0
-    //const overflowLeft = fillXPixels/2 - (targetX * parentWidth) > 0 ? fillXPixels/2 - (targetX * parentWidth) : 0
-
-    //if (overflowTop) {
-    //  clipTop += overflowTop
-    //  clipBottom -= overflowTop
-    //}
-
-    //if (overflowRight) {
-    //  clipRight += overflowRight
-    //  clipLeft -= overflowRight
-    //}
-
-    //if (overflowBottom) {
-    //  clipBottom += overflowBottom 
-    //  clipTop -= overflowBottom
-    //}
-
-    //if (overflowLeft) {
-    //  clipLeft += overflowLeft
-    //  clipRight -= overflowLeft
-    //}
-
-    //console.log(clipRight + '<-- clipRight')
-    //console.log(clipLeft + '<-- clipLeft')
-    //console.log(overflowTop + '<-- overflowTop')
-    //console.log(overflowRight + '<-- overflowRight')
-    //console.log(overflowBottom + '<-- overflowBottom')
-    //console.log(overflowLeft + '<-- overflowLeft')
-
-    //Position the image
-    //const centerX = targetX * parentWidth
-    //const centerY = targetY * parentHeight
-
-    //this.setCssProperty('left', `${centerX - imgLeft}px`) 
-    //this.setCssProperty('top', `${centerY - imgTop}px`) 
-
-    /* values are from-top, from-right, from-bottom, from-left */
-
-    //this.setCssProperty('clip-path', `inset(${clipTop}px ${clipRight}px ${clipBottom}px ${clipLeft}px)`)
-  
-    //this.translateContainer = new container()
-    //this.translateContainer.setCssProperty('width', fillXPixels)
-    //this.translateContainer.setCssProperty('height', fillYPixels)
-    //this.translateContainer.setCssProperty('left', `${centerX - imgLeft}px`) 
-    //this.translateContainer.setCssProperty('top', `${centerY - imgTop}px`) 
-    //this.translateContainer.setCssProperty('left', `${clipLeft}px`) 
-    //this.translateContainer.setCssProperty('top', `${clipTop}px`) 
+    this.getImgNode().setCssProperty('left', -imgLeft + fillXPixels/2)
+    this.getImgNode().setCssProperty('top', -imgTop + fillYPixels/2)
   }
 
   addText(text) {
     const node = new textDiv(text)
-    node.setCssProperty('left', this.getCssProperty('left'))
-    node.setCssProperty('top', this.getCssProperty('top'))
-
-    //if (this.translateContainer) {
-    //  node.setCssProperty('left', this.translateContainer.getCssProperty('left'))
-    //  node.setCssProperty('top', this.translateContainer.getCssProperty('top'))
-    //  node.setCssProperty('width', this.translateContainer.getCssProperty('width'))
-    //  node.setCssProperty('height', this.translateContainer.getCssProperty('height'))
-
-    //  this.textNodes.push(node)
-    //} else {
-    //  node.setCssProperty('left', this.getCssProperty('left'))
-    //  node.setCssProperty('top', this.getCssProperty('top'))
-    //  this.textNodes.push(node)
-    //}
+    //node.setCssProperty('left', this.getCssProperty('left'))
+    //node.setCssProperty('top', this.getCssProperty('top'))
     this.textNodes.push(node)
     return node
   }

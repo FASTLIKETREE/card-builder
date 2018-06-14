@@ -23,6 +23,7 @@ class svg extends node {
 
   getHtml(depth = 0) {
     const indentation = '  '.repeat(depth)
+    this.setCssProperty('z-index', 2)
     const propertyString = this.getPropertyString()
 
     this.html += `${indentation}<svg style=${propertyString}>`
