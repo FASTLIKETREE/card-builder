@@ -125,16 +125,34 @@ class container extends node {
       containerNode.getAnchorObject(anchorObj)
     }
 
-    if (!this.anchorPoint ) { return anchorObj }
+    if (!this.anchorPoint) { return anchorObj }
 
     const name = this.anchorPoint.name
-    const x = this.getCssProperty('width') * this.anchorPoint.x
-    const y = this.getCssProperty('height') * this.anchorPoint.y
+    let x = this.getCssProperty('width') * this.anchorPoint.x
+    let y = this.getCssProperty('height') * this.anchorPoint.y
+
+    const top = this.getCssProperty('top')
+    const left = this.getCssProperty('left')
+    const bottom = this.getCssProperty('bottom')
+    const right = this.getCssProperty('right')
+
+
+    while(1) {
+      const parentContainer = this.getParentContainer()
+      if(!parentContainer) {
+        break
+      }
+
+      const top = this.getCssProperty('top')
+      const left = this.getCssProperty('left')
+      const bottom = this.getCssProperty('bottom')
+      const right = this.getCssProperty('right')
+    }
 
     anchorObj[name] = { x, y }
-
     return anchorObj
   }
+  _getContainerParentOffset(
 }
 
 export { container }
