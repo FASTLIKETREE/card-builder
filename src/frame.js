@@ -51,11 +51,11 @@ class frame extends container {
     this.mask.addSvgNode(shape)
   }
 
-  save() {
-    let insertText = ''
-    for (let i = 0; i < arguments.length; i++) {
-      insertText += arguments[i]
-    }
+  save(name) {
+    const anchorObject = this.getAnchorObject()
+    console.log(anchorObject)
+    fs.writeFileSync(`./${name}.js`, JSON.stringify(anchorObject, null, 2))
+  
 const html = `${this.boundingString}
 <html>
   <style>

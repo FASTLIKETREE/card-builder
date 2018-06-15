@@ -12,6 +12,10 @@ class container extends node {
   }
 
   addImage(name) {
+    //console.log('adding image with name:' + name)
+    //this.imgStats = imgStats[name]
+    //console.log(this.imgStats)
+
     const stats = imgStats[name]
     if (!stats) {
       throw new Error(`image ${name} not found in image cache, run "gulp img" to add it.`)
@@ -85,8 +89,6 @@ class container extends node {
 
   addText(text) {
     const node = new textDiv(text)
-    //node.setCssProperty('left', this.getCssProperty('left'))
-    //node.setCssProperty('top', this.getCssProperty('top'))
     this.textNodes.push(node)
     return node
   }
@@ -112,6 +114,26 @@ class container extends node {
     this.html += `${indentation}</div>\n`
 
     return this.html
+  }
+
+  setAnchorPoint(name, x, y) {
+    this.anchorPoint = { name, x, y }
+  }
+  
+  getAnchorObject(anchorObj = {}) {
+    for (const containerNode of this.containerNodes) {
+      containerNode.getAnchorObject(anchorObj)
+    }
+
+    if (!this.anchorPoint ) { return anchorObj }
+
+    const name = this.anchorPoint.name
+    const x = this.getCssProperty('width') * this.anchorPoint.x
+    const y = this.getCssProperty('height') * this.anchorPoint.y
+
+    anchorObj[name] = { x, y }
+
+    return anchorObj
   }
 }
 
