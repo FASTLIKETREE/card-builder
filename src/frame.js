@@ -53,6 +53,11 @@ class frame extends container {
 
   save(name) {
     const anchorObject = this.getAnchorObject()
+    const height = this.getCssProperty('height')
+    //Set openGL coordinates
+    for (const key of Object.keys(anchorObject)) {
+      anchorObject[key].y = height - anchorObject[key].y
+    }
     console.log(anchorObject)
     fs.writeFileSync(`./${name}.js`, JSON.stringify(anchorObject, null, 2))
   

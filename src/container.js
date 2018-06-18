@@ -12,10 +12,6 @@ class container extends node {
   }
 
   addImage(name) {
-    //console.log('adding image with name:' + name)
-    //this.imgStats = imgStats[name]
-    //console.log(this.imgStats)
-
     const stats = imgStats[name]
     if (!stats) {
       throw new Error(`image ${name} not found in image cache, run "gulp img" to add it.`)
@@ -31,6 +27,20 @@ class container extends node {
     
     this.containerNodes.push(containerNode)
     return containerNode
+  }
+
+  setCssProperty(property, value) {
+    if (property == 'bottom') {
+      const parentHeight = this.getParentContainer().getCssProperty('height')
+      const height = this.getCssProperty('height')
+      return super.setCssProperty('top', parentHeight - value - height)
+    }
+    if (property == 'right') {
+      const parentWidth = this.getParentContainer().getCssProperty('width')
+      const width = this.getCssProperty('width')
+      return super.setCssProperty('left', parentWidth - width - value)
+    }
+    super.setCssProperty(property, value)
   }
 
   setParentContainer(node) {
@@ -58,28 +68,19 @@ class container extends node {
     const parentWidth = this.getParentContainer().getCssProperty('width')
     const parentHeight = this.getParentContainer().getCssProperty('height')
 
-    //const width = this.getCssProperty('width')
-    //const height = this.getCssProperty('height')
-
     const fillXPixels = fillX * parentWidth
     const fillYPixels = fillY * parentHeight
 
     this.setCssProperty('width', fillXPixels)
     this.setCssProperty('height', fillYPixels)
+
     const setLeft = targetX * parentWidth - fillXPixels/2 > 0 ? targetX * parentWidth - fillXPixels/2 : 0
     const setTop = targetY * parentHeight - fillYPixels/2 > 0 ? targetY * parentHeight - fillYPixels/2 : 0
+    const translateLeft = setLeft + fillXPixels > parentWidth ? setLeft + fillXPixels - parentWidth : 0
+    const translateTop = setTop + fillYPixels > parentHeight ? setTop + fillYPixels - parentHeight : 0
 
-    if (setLeft + fillXPixels > parentWidth) {
-      this.setCssProperty('right', '0px')
-    } else {
-      this.setCssProperty('left', setLeft)
-    }
-
-    if (setTop + fillYPixels > parentHeight) {
-      this.setCssProperty('bottom', '0px')
-    } else {
-      this.setCssProperty('top', setTop)
-    }
+    this.setCssProperty('left', setLeft - translateLeft)
+    this.setCssProperty('top', setTop - translateTop)
 
     this.setCssProperty('overflow', 'hidden')
 
@@ -116,43 +117,46 @@ class container extends node {
     return this.html
   }
 
+  //Expand this to an array, so we can set multiple anchor points on a single image
   setAnchorPoint(name, x, y) {
     this.anchorPoint = { name, x, y }
   }
   
-  getAnchorObject(anchorObj = {}) {
+  getAnchorObject(anchorObj = {}, containerArray = []) {
+    containerArray.push(this)
     for (const containerNode of this.containerNodes) {
       containerNode.getAnchorObject(anchorObj)
     }
 
     if (!this.anchorPoint) { return anchorObj }
 
+    let topAggregator = 0
+    let leftAggregator = 0
+    for (const container of containerArray) {
+      topAggregator += this.getCssProperty('top')
+      leftAggregator += this.getCssProperty('left')
+    }
+
     const name = this.anchorPoint.name
     let x = this.getCssProperty('width') * this.anchorPoint.x
     let y = this.getCssProperty('height') * this.anchorPoint.y
 
-    const top = this.getCssProperty('top')
-    const left = this.getCssProperty('left')
-    const bottom = this.getCssProperty('bottom')
-    const right = this.getCssProperty('right')
-
-
-    while(1) {
-      const parentContainer = this.getParentContainer()
-      if(!parentContainer) {
-        break
-      }
-
-      const top = this.getCssProperty('top')
-      const left = this.getCssProperty('left')
-      const bottom = this.getCssProperty('bottom')
-      const right = this.getCssProperty('right')
-    }
+    y += topAggregator
+    x += leftAggregator
 
     anchorObj[name] = { x, y }
+
+    containerArray.pop()
     return anchorObj
   }
-  _getContainerParentOffset(
+
+  //_getNumberPx(pxValue) {
+  //  return Number(pxValue.replace('px',''))
+  //}
+
+  //_getPxNumber(numberValue) {
+  //  return numberValue + 'px'
+  //}
 }
 
 export { container }
