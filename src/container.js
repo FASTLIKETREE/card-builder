@@ -9,6 +9,7 @@ class container extends node {
     this.html = ''
     this.containerNodes = []
     this.textNodes = []
+    this.anchors = {}
   }
 
   addImage(name) {
@@ -117,9 +118,8 @@ class container extends node {
     return this.html
   }
 
-  //Expand this to an array, so we can set multiple anchor points on a single image
   setAnchorPoint(name, x, y) {
-    this.anchorPoint = { name, x, y }
+    this.anchors[name] = { x, y }
   }
   
   getAnchorObject(anchorObj = {}, containerArray = []) {
@@ -128,7 +128,7 @@ class container extends node {
       containerNode.getAnchorObject(anchorObj)
     }
 
-    if (!this.anchorPoint) { return anchorObj }
+    if (!Object.keys(this.anchors).length) { return anchorObj }
 
     let topAggregator = 0
     let leftAggregator = 0
@@ -137,14 +137,15 @@ class container extends node {
       leftAggregator += this.getCssProperty('left')
     }
 
-    const name = this.anchorPoint.name
-    let x = this.getCssProperty('width') * this.anchorPoint.x
-    let y = this.getCssProperty('height') * this.anchorPoint.y
+    for (const key of Object.keys(this.anchors)) {
+      let x = this.getCssProperty('width') * this.anchors[key].x
+      let y = this.getCssProperty('height') * this.anchors[key].y
 
-    y += topAggregator
-    x += leftAggregator
+      y += topAggregator
+      x += leftAggregator
 
-    anchorObj[name] = { x, y }
+      anchorObj[key] = { x, y }
+    }
 
     containerArray.pop()
     return anchorObj

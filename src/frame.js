@@ -19,13 +19,20 @@ class frame extends container {
     this.svg.setMask(this.mask)
     this.boundingBox = shape.getBoundingBox()
     this.frame = this
+    this.frameDimensions = {}
     
     // Save bounding box string in page to alert watcher of how to crop
-    this.boundingString = `<!-- ${Object.values(this.boundingBox).join(', ')} -->`
+    //this.boundingString = `<!-- ${Object.values(this.boundingBox).join(', ')} -->`
     this.setCssProperty('top', this.boundingBox.y)
     this.setCssProperty('left', this.boundingBox.x)
     this.setCssProperty('width', this.boundingBox.width)
     this.setCssProperty('height', this.boundingBox.height)
+
+    //Setup watcher frame dimensions
+    this.frameDimensions.top = this.boundingBox.y
+    this.frameDimensions.left = this.boundingBox.x
+    this.frameDimensions.width = this.boundingBox.width
+    this.frameDimensions.height = this.boundingBox.height
 
     // Setup svg mask for frame
     let maskRect = new rect(
@@ -54,14 +61,18 @@ class frame extends container {
   save(name) {
     const anchorObject = this.getAnchorObject()
     const height = this.getCssProperty('height')
-    //Set openGL coordinates
+
+    //Set openGL coordinates to bottom left 0,0
     for (const key of Object.keys(anchorObject)) {
       anchorObject[key].y = height - anchorObject[key].y
     }
+
+    const cardDetails = Object.assign({}, this.frameDimensions, { name })
     console.log(anchorObject)
-    fs.writeFileSync(`./${name}.js`, JSON.stringify(anchorObject, null, 2))
+    fs.writeFileSync(`./${name}_anchors.js`, JSON.stringify(anchorObject, null, 2))
+    fs.writeFileSync(`./card_details.js`, JSON.stringify(cardDetails, null, 2))
   
-const html = `${this.boundingString}
+const html = `
 <html>
   <style>
     * {

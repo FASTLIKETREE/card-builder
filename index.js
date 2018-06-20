@@ -2,7 +2,6 @@ import fs from 'fs'
 import { container } from './container'
 import { svg, mask, rect, circle, ellipse, polygon, boundedPolygon } from './svg'
 import { frame } from './frame'
-//import { genPage } from './genPage'
 
 process.on('unhandledRejection', r => console.log(r));
 
@@ -38,7 +37,7 @@ function card(){
   //textNode.setCssProperty('left', '16px')
   //textNode.setCssProperty('right', '16px')
   textNode.setCssProperty('width', 160)
-  textNode.setCssProperty('color', 'brown')
+  textNode.setCssProperty('color', 'blue')
   textNode.setCssProperty('font-size', '16px')
   textNode.setCssProperty('text-align', 'center')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
@@ -54,17 +53,8 @@ function card(){
   shieldImg.setCssProperty('left', 16)
 
   swordImg.setAnchorPoint('attack', .5, .5)
+  swordImg.setAnchorPoint('health', 0, .5)
   shieldImg.setAnchorPoint('defense', .5, .5)
-
-  //textNode = starImg.addText('A')
-  //textNode.setCssProperty('left', '50%')
-  //textNode.setCssProperty('top', '50%')
-  //textNode.setCssProperty('color', 'blue')
-  //textNode.setCssProperty('font-size', '40px')
-  //textNode.setCssProperty('text-align', 'center')
-  //textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')
-
-  //textNode = treeImg.addText('This has a lot of power to wrap, you can write yourself a long card and things should be looking good. Love Wes')
 
   card.save('bowman')
 }
