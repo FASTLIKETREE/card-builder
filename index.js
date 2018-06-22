@@ -37,7 +37,7 @@ function card(){
   //textNode.setCssProperty('left', '16px')
   //textNode.setCssProperty('right', '16px')
   textNode.setCssProperty('width', 160)
-  textNode.setCssProperty('color', 'blue')
+  textNode.setCssProperty('color', 'grey')
   textNode.setCssProperty('font-size', '16px')
   textNode.setCssProperty('text-align', 'center')
   textNode.setCssProperty('transform', 'translateX(-50%) translateY(-50%)')

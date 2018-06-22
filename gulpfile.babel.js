@@ -44,7 +44,7 @@ gulp.task('imgCache', function(cb) {
 })
 
 gulp.task('js', function() {
-  return gulp.src([src + '/*.js'])
+  return gulp.src([src + '/**/*.js'])
   .pipe(babel())
   .pipe(gulp.dest(dist))
 })
@@ -65,7 +65,7 @@ gulp.task('lint', function() {
 })
 
 gulp.task('watch', function() {
-  const watcher = watch(['./index.js', src + '/*.js'], { verbose: true }, function() {
+  const watcher = watch(['./index.js', src + '/**/*.js'], { verbose: true }, function() {
     runSequence(
       'js',
       'index',
@@ -80,6 +80,14 @@ gulp.task('watch', function() {
 
 gulp.task('genCard', function() {
   exec(`node ${dist}/index.js`, function (err, stdout, stderr) {
+    console.log(stdout)
+    console.log(stderr)
+  })
+  .on('error', gutil.log)
+})
+
+gulp.task('genCards', function() {
+  exec(`node ${dist}/templates/structure.js`, function (err, stdout, stderr) {
     console.log(stdout)
     console.log(stderr)
   })

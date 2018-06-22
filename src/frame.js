@@ -69,7 +69,7 @@ class frame extends container {
 
     const cardDetails = Object.assign({}, this.frameDimensions, { name })
     console.log(anchorObject)
-    fs.writeFileSync(`./${name}_anchors.js`, JSON.stringify(anchorObject, null, 2))
+    fs.writeFileSync(`./anchors/${name}_anchors.js`, JSON.stringify(anchorObject, null, 2))
     fs.writeFileSync(`./card_details.js`, JSON.stringify(cardDetails, null, 2))
   
 const html = `

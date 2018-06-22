@@ -13,6 +13,7 @@ class container extends node {
   }
 
   addImage(name) {
+    console.log(name)
     const stats = imgStats[name]
     if (!stats) {
       throw new Error(`image ${name} not found in image cache, run "gulp img" to add it.`)
@@ -150,14 +151,6 @@ class container extends node {
     containerArray.pop()
     return anchorObj
   }
-
-  //_getNumberPx(pxValue) {
-  //  return Number(pxValue.replace('px',''))
-  //}
-
-  //_getPxNumber(numberValue) {
-  //  return numberValue + 'px'
-  //}
 }
 
 export { container }
