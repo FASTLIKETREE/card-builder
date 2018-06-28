@@ -52,13 +52,34 @@ class frame extends container {
 
     fillRect.setCssProperty('fill', '#ff55ff')
     fillRect.setMaskId('frame')
+    this.svgRect = fillRect
     this.svg.addSvgNode(fillRect)
 
     shape.setCssProperty('fill', '#000000')
     this.mask.addSvgNode(shape)
   }
 
-  save(name) {
+  getMask() {
+    return this.mask
+  }
+
+  getSvgRect() {
+    return this.svgRect
+  }
+
+  getSvg() {
+    return this.svg
+  }
+
+  getFrameDimensions() {
+    return this.frameDimensions
+  }
+
+  getFrameDimensions() {
+    return this.frameDimensions
+  }
+
+  getAnchors() {
     const anchorObject = this.getAnchorObject()
     const height = this.getCssProperty('height')
 
@@ -67,37 +88,35 @@ class frame extends container {
       anchorObject[key].y = height - anchorObject[key].y
     }
 
-    const cardDetails = Object.assign({}, this.frameDimensions, { name })
-    console.log(anchorObject)
-    fs.writeFileSync(`./anchors/${name}_anchors.js`, JSON.stringify(anchorObject, null, 2))
-    fs.writeFileSync(`./card_details.js`, JSON.stringify(cardDetails, null, 2))
-  
-const html = `
-<html>
-  <style>
-    * {
-      position: absolute
-    }
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
-  </style>
-  <script>
-    document.onmousemove = function(e){
-    var x = e.pageX;
-    var y = e.pageY;
-    document.title = 'X is ' + x + ' and Y is ' + y;
-    }
-  </script>
-  <body>
-    ${this.getHtml()}
-    ${this.svg.getHtml()}
-  </body>
-</html>`
-    fs.writeFileSync('./card.html', html)
+    return anchorObject
   }
-}
+}  
+//const html = `
+//<html>
+//  <style>
+//    * {
+//      position: absolute
+//    }
+//    html, body {
+//      width: 100%;
+//      height: 100%;
+//      margin: 0;
+//    }
+//  </style>
+//  <script>
+//    document.onmousemove = function(e){
+//    var x = e.pageX;
+//    var y = e.pageY;
+//    document.title = 'X is ' + x + ' and Y is ' + y;
+//    }
+//  </script>
+//  <body>
+//    ${this.getHtml()}
+//    ${this.svg.getHtml()}
+//  </body>
+//</html>`
+//    fs.writeFileSync('./card.html', html)
+//  }
+//}
 
 export { frame }

@@ -69,6 +69,10 @@ class mask extends node {
     this.svgNodes.push(svgNode)
   }
 
+  setMaskId(id) {
+    this.id = id 
+  }
+
   getHtml(depth) {
     const indentation = '  '.repeat(depth)
     const propertyString = this.getPropertyString()
@@ -218,14 +222,12 @@ class polygon extends maskableSvg {
     }
   }
 
-
   getHtml() {
     const propertyString = this.getPropertyString()
     let pointString = ''
     for (const point of this.pointArray) {
       pointString += `${point.x},${point.y} `
     }
-
 
     return `<polygon shape-rendering='optimizeSpeed' ${this.maskHtml} points='${pointString}'  ${this.maskHtml} style=${propertyString}></polygon>`
   }

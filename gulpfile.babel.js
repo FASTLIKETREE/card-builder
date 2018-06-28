@@ -44,7 +44,7 @@ gulp.task('imgCache', function(cb) {
 })
 
 gulp.task('js', function() {
-  return gulp.src([src + '/**/*.js'])
+  return gulp.src(['./index.js', src + '/**/*.js'])
   .pipe(babel())
   .pipe(gulp.dest(dist))
 })

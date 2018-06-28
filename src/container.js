@@ -13,7 +13,6 @@ class container extends node {
   }
 
   addImage(name) {
-    console.log(name)
     const stats = imgStats[name]
     if (!stats) {
       throw new Error(`image ${name} not found in image cache, run "gulp img" to add it.`)
