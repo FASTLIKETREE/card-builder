@@ -16,6 +16,12 @@ class frame extends container {
     super()
     this.svg = new svg()
     this.mask = new mask('frame')
+
+    const frameId = uuidv4()
+
+    //this.mask.setId(`frame${i}${j}`)
+    this.mask.setId(frameId)
+
     this.svg.setMask(this.mask)
     this.boundingBox = shape.getBoundingBox()
     this.frame = this
@@ -51,20 +57,11 @@ class frame extends container {
       this.boundingBox.height + 6)
 
     fillRect.setCssProperty('fill', '#ff55ff')
-    fillRect.setMaskId('frame')
-    this.svgRect = fillRect
+    fillRect.setMaskId(frameId)
     this.svg.addSvgNode(fillRect)
 
     shape.setCssProperty('fill', '#000000')
     this.mask.addSvgNode(shape)
-  }
-
-  getMask() {
-    return this.mask
-  }
-
-  getSvgRect() {
-    return this.svgRect
   }
 
   getSvg() {
@@ -91,32 +88,12 @@ class frame extends container {
     return anchorObject
   }
 }  
-//const html = `
-//<html>
-//  <style>
-//    * {
-//      position: absolute
-//    }
-//    html, body {
-//      width: 100%;
-//      height: 100%;
-//      margin: 0;
-//    }
-//  </style>
-//  <script>
-//    document.onmousemove = function(e){
-//    var x = e.pageX;
-//    var y = e.pageY;
-//    document.title = 'X is ' + x + ' and Y is ' + y;
-//    }
-//  </script>
-//  <body>
-//    ${this.getHtml()}
-//    ${this.svg.getHtml()}
-//  </body>
-//</html>`
-//    fs.writeFileSync('./card.html', html)
-//  }
-//}
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 export { frame }
